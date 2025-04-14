@@ -1,49 +1,44 @@
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
+import { prisma } from "../utils/db";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import BlogPostCard from "@/components/BlogPostCard";
 
-import Link from 'next/link'
-import React from 'react'
-import { prisma } from '../utils/db'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-import BlogPostCard from '@/components/BlogPostCard'
-import { redirect } from 'next/navigation'
-
-
-async function getData(userID: string) {
+async function getData(userId: string) {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   const data = await prisma.blogPost.findMany({
     where: {
-      authorID: userID,
+      authorID: userId,
     },
     orderBy: {
-      createdAt: 'desc',
-    }
-  })
-  return data
+      createdAt: "desc",
+    },
+  });
+
+  return data;
 }
 
-const DashboardRoute = async () => {
+export default async function DashboardRoute() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
-  const {getUser} = getKindeServerSession()
-  const user = await getUser()
-  if (!user) {
-    redirect('/login')
-  }
-  const data = await getData(user?.id)
+  const data = user?.id ? await getData(user.id) : [];
 
   return (
     <div>
-      <div className='flex flex-row items-center justify-between ml-6 mr-6 mb-4 mt-6'>
-        <h1 className='text-3xl font-bold'>Your Articles</h1>
-        
-        <Link href='/dashboard/create' className='bg-blue-500 text-white px-4 py-2 rounded-md'>
-          Create New Article
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-medium">Your Blog Articles</h2>
+
+        <Link className={buttonVariants()} href="/dashboard/create">
+          Create Post
         </Link>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
-        {data.map((item) => (
-          <BlogPostCard key={item.id} data={item} />
-        ))}
-        </div>
-    </div>
-  )
-}
 
-export default DashboardRoute
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {data.map((item) => (
+          <BlogPostCard data={item} key={item.id} />
+        ))}
+      </div>
+    </div>
+  );
+}
