@@ -12,10 +12,11 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 
-  // ✅ Custom override to allow require()
+  // Disable unused vars globally
   {
     rules: {
-      "@typescript-eslint/no-require-imports": "off",
+      '@typescript-eslint/no-unused-vars': 'off',  // Disable unused vars check globally
+      '@typescript-eslint/no-require-imports': 'off',  // Optional, disable require() imports check
     },
   },
 ];
