@@ -26,7 +26,7 @@ const DashboardRoute = async () => {
   if (!user) {
     redirect('/login')
   }
-  const data = await getData(user.id)
+  const data = await getData(user?.id)
 
   return (
     <div>
