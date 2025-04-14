@@ -1,4 +1,5 @@
-// Using require to avoid issues with "bundler" resolution
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+
 const { PrismaClient } = require('@prisma/client');
 
 const globalForPrisma = globalThis as unknown as {
