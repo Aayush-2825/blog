@@ -3,7 +3,19 @@ import Link from "next/link";
 import { prisma } from "../utils/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import BlogPostCard from "@/components/BlogPostCard";
-import { BlogPost } from "@prisma/client";
+
+type BlogPost = {
+  id: string;
+        title: string;
+        content: string;
+        imageURL: string;
+        authorID: string;
+        authorName: string;
+        authorImage: string;
+        createdAt: Date;
+        updatedAt: Date;
+
+};
 
 async function getData(userId: string | undefined): Promise<BlogPost[]> {
   if (!userId) return [];
