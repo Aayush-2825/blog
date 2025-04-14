@@ -70,9 +70,9 @@ export default async function IdPage({ params }: { params: Params }) {
       <Card>
         <CardContent>
           <article className="prose prose-lg max-w-none text-gray-700">
-            {data.content.split(/\n\s*\n/).map((paragraph, index) => (
+            {data.content.split(/\n\s*\n/).map((paragraph:  string, index: number) => (
               <p key={index} className="mb-4">
-                {paragraph.split(/(<[^>]+>)/g).map((part, subIndex) =>
+                {paragraph.split(/(<[^>]+>)/g).map((part: string, subIndex:number) =>
                   part.startsWith("<") && part.endsWith(">") ? (
                     <h2
                       key={subIndex}
