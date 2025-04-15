@@ -69,24 +69,21 @@ export default async function IdPage({ params }: { params: Params }) {
 
       <Card>
         <CardContent>
-          <article className="prose prose-lg max-w-none text-gray-700">
-            {data.content.split(/\n\s*\n/).map((paragraph:  string, index: number) => (
-              <p key={index} className="mb-4">
-                {paragraph.split(/(<[^>]+>)/g).map((part: string, subIndex:number) =>
-                  part.startsWith("<") && part.endsWith(">") ? (
-                    <h2
-                      key={subIndex}
-                      className="text-xl font-bold mt-4 mb-4"
-                    >
-                      {part.slice(1, -1)}
-                    </h2>
-                  ) : (
-                    <span key={subIndex}>{part}&nbsp;</span>
-                  )
-                )}
-              </p>
-            ))}
-          </article>
+          <p className="text-gray-700 whitespace-pre-wrap font-serif">
+        {data.content.split(/(<.*?>)/g).map((segment, index) => {
+          if (segment.startsWith("<") && segment.endsWith(">")) {
+            return (
+          <h2
+            key={index}
+            className="text-xl font-bold my-4"
+          >
+            {segment.slice(1, -1)}
+          </h2>
+            );
+          }
+          return segment;
+        })}
+          </p>
         </CardContent>
       </Card>
     </div>
