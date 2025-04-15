@@ -4,6 +4,20 @@ import { prisma } from "../utils/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import BlogPostCard from "@/components/BlogPostCard";
 
+
+type BlogPost = {
+  id: string;
+        title: string;
+        content: string;
+        imageURL: string;
+        authorID: string;
+        authorName: string;
+        authorImage: string;
+        createdAt: Date;
+        updatedAt: Date;
+
+};
+
 async function getData(userId: string) {
   await new Promise((resolve) => setTimeout(resolve, 2000));
   const data = await prisma.blogPost.findMany({
@@ -39,13 +53,15 @@ export default async function DashboardRoute() {
 
       {data.length > 0 ? (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data.map((item) => (
+        {data.map((item:BlogPost) => (
         <BlogPostCard data={item} key={item.id} />
         ))}
       </div>
       ) : (
       <p className="text-gray-600 text-center mt-8">You have no blog posts yet. Start creating one!</p>
       )}
+
+      
     </div>
   );
 }
