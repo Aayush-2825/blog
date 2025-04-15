@@ -15,7 +15,7 @@ const eslintConfig = [
     ignores: [
       "node_modules/**",
       ".next/**",
-      "src/prisma/generated/**", // Adjust to where your Prisma client is
+      "src/generated/**", // Adjust to where your Prisma client is
     ],
   },
 
@@ -24,7 +24,7 @@ const eslintConfig = [
 
   // 3. Optional: Loosen rules for generated files instead of ignoring them completely
   {
-    files: ["src/prisma/generated/**/*"],
+    files: ["src/generated/**/*"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/no-unused-vars": "off",
