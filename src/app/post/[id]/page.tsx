@@ -70,7 +70,7 @@ export default async function IdPage({ params }: { params: Params }) {
       <Card>
         <CardContent>
           <p className="text-gray-700 whitespace-pre-wrap font-serif">
-        {data.content.split(/(<.*?>)/g).map((segment, index) => {
+        {data.content.split(/(<.*?>)/g).map((segment: string, index: number) => {
           if (segment.startsWith("<") && segment.endsWith(">")) {
             return (
           <h2
