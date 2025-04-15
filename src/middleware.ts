@@ -6,7 +6,7 @@ export default withAuth(
     return NextResponse.next(); // <--- This is required
   },
   {
-    publicPaths: ["/","/posts/:path*"], // Let homepage be public
+    publicPaths: ["/","/post/:path*"], 
   }
 );
 
